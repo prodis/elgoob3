@@ -1,6 +1,6 @@
-# Elgoob2
+# Elgoob3
 
-* Indexed page content is stored as words.
+* Words are stored, as well as related page IDs.
 * Only words match in search.
 * I didn’t use any algorithm to search.
 
