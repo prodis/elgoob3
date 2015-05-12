@@ -3,10 +3,8 @@ class PageSearch
     query_words = text_parser.words(query)
     return [] if query_words.empty?
 
-    found_words = Word.all.select { |word| query_words.include?(word.text) }
-    return [] if found_words.empty?
-
-    page_ids = found_words.map { |word| word.page_ids }.flatten
+    page_ids = query_words.map { |word| Word.all[word] }.compact.flatten
+    return [] if page_ids.empty?
 
     page_count = Hash.new(0)
     page_ids.each { |id| page_count[id] += 1 }
