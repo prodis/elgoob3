@@ -6,11 +6,11 @@ RSpec.describe PageSearch do
   end
 
   after do
-    WordRepository.instance_variable_set(:@words, [])
+    WordRepository.instance_variable_set(:@words, {})
   end
 
   describe '#search' do
-    let(:words) { %w{ the quick cat jumped } }
+    let(:words) { %w{ the quick cat jumped unkown } }
     let(:query) { words.join(' ') }
     let(:expected_result) do
       [
@@ -21,6 +21,12 @@ RSpec.describe PageSearch do
 
     it 'returns pages IDs ordered by score' do
       expect(subject.search(query)).to eq expected_result
+    end
+
+    context 'when words are not supplied' do
+      it 'returns empty result' do
+        expect(subject.search('')).to be_empty
+      end
     end
   end
 end

@@ -3,17 +3,26 @@ class PageSearch
     query_words = text_parser.words(query)
     return [] if query_words.empty?
 
-    page_ids = query_words.map { |word| Word.all[word] }.compact.flatten
-    return [] if page_ids.empty?
+    scores = query_words.inject({}) do |words_result, word|
+      page_ids = Word.all[word] || []
 
-    page_count = Hash.new(0)
-    page_ids.each { |id| page_count[id] += 1 }
+      page_ids.inject(words_result) do |ids_result, id|
+        ids_result[id] = ids_result[id].to_i + 1
+        ids_result
+      end
+    end
 
-    result = page_count.map { |id, score| { pageId: id, score: score } }
-    result.sort { |a, b| b[:score] <=> a[:score] }
+    format(scores)
   end
 
   private
+
+  def format(scores)
+    return [] if scores.empty?
+
+    result = scores.map { |id, score| { pageId: id, score: score } }
+    result.sort { |a, b| b[:score] <=> a[:score] }
+  end
 
   def text_parser
     @text_parser ||= TextParser.new
