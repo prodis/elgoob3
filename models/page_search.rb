@@ -4,7 +4,7 @@ class PageSearch
     return [] if query_words.empty?
 
     scores = query_words.inject({}) do |words_result, word|
-      page_ids = Word.all[word] || []
+      page_ids = WordRepository.all[word] || []
 
       page_ids.inject(words_result) do |ids_result, id|
         ids_result[id] = ids_result[id].to_i + 1

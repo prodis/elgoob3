@@ -32,5 +32,5 @@ end
 get '/' do
   content_type :json
 
-  Word.all.to_json
+  WordRepository.all.to_json
 end

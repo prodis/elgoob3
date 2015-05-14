@@ -14,11 +14,8 @@ RSpec.describe Page do
     subject { described_class.new(1, 'Content here') }
 
     it 'saves words' do
-      fake_word = double(Word)
-
       %w{ content here }.each do |word|
-        expect(Word).to receive(:new).with(word, 1).and_return(fake_word)
-        expect(fake_word).to receive(:save)
+        expect(WordRepository).to receive(:save).with(word, 1)
       end
 
       subject.save

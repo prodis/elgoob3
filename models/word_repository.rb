@@ -1,11 +1,11 @@
 module WordRepository
   class << self
-    def save(word)
-      if words[word.text]
-        words[word.text] += word.page_ids
-        words[word.text].uniq!
+    def save(word, page_id)
+      if words[word]
+        words[word] << page_id
+        words[word].uniq!
       else
-        words[word.text] = word.page_ids
+        words[word] = [page_id]
       end
 
       true

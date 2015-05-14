@@ -55,7 +55,7 @@ RSpec.describe 'Application' do
       it 'saves page content' do
         expected_words = %w{ elementary dear watson }
 
-        Word.all.each do |word, page_ids|
+        WordRepository.all.each do |word, page_ids|
           expect(expected_words).to include(word)
           expect(page_ids).to eq [300]
         end

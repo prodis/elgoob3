@@ -18,19 +18,15 @@ RSpec.describe WordRepository do
 
   describe '.save' do
     context 'when word was not created' do
-      let(:word) { Word.new('three', 3) }
-
       it 'adds word to repository' do
-        subject.save(word)
+        subject.save('three', 3)
         expect(subject.all['three']).to eq [3]
       end
     end
 
     context 'when word was already created' do
-      let(:word) { Word.new('two', 4) }
-
       it 'adds page ID' do
-        subject.save(word)
+        subject.save('two', 4)
         expect(subject.all['two']).to eq [2, 4]
       end
     end
