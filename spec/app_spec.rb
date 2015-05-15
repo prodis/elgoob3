@@ -15,7 +15,10 @@ RSpec.describe 'Application' do
       let(:query) { 'Elementary, dear Watson' }
 
       before do
-        allow_any_instance_of(PageSearch).to receive(:search).with(query).and_return(search_result)
+        page_search = double(PageSearch)
+        allow(PageSearch).to receive(:new).and_return(page_search)
+        allow(page_search).to receive(:search).with(query).and_return(search_result)
+
         get "/search?query=#{query}"
       end
 
