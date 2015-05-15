@@ -1,20 +1,14 @@
 module WordRepository
   class << self
-    def save(word)
-      word_found = find(word.text)
-
-      if word_found
-        word_found.page_ids += word.page_ids
-        word_found.page_ids.uniq!
+    def save(word, page_id)
+      if words[word]
+        words[word] << page_id
+        words[word].uniq!
       else
-        words << word
+        words[word] = [page_id]
       end
 
       true
-    end
-
-    def find(text)
-      words.select { |word| word.text == text }.first
     end
 
     def all
@@ -26,7 +20,7 @@ module WordRepository
     private
 
     def words
-      @words ||= []
+      @words ||= {}
     end
   end
 

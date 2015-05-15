@@ -28,3 +28,9 @@ get '/search' do
 
   result.to_json
 end
+
+get '/' do
+  content_type :json
+
+  WordRepository.all.to_json
+end

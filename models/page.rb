@@ -8,7 +8,7 @@ class Page
 
   def save
     content.each do |word|
-      Word.new(word, id).save
+      WordRepository.save(word, id)
     end
   end
 

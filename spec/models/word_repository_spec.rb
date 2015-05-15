@@ -2,10 +2,10 @@ RSpec.describe WordRepository do
   subject { described_class }
 
   let(:words) do
-    [
-      Word.new('one', 1),
-      Word.new('two', 2)
-    ]
+    {
+      'one' => [1],
+      'two' => [2]
+    }
   end
 
   before do
@@ -13,32 +13,22 @@ RSpec.describe WordRepository do
   end
 
   after do
-    described_class.instance_variable_set(:@words, [])
+    described_class.instance_variable_set(:@words, {})
   end
 
   describe '.save' do
     context 'when word was not created' do
-      let(:word) { Word.new('three', 3) }
-
       it 'adds word to repository' do
-        subject.save(word)
-        expect(subject.all.last).to eq word
+        subject.save('three', 3)
+        expect(subject.all['three']).to eq [3]
       end
     end
 
     context 'when word was already created' do
-      let(:word) { Word.new('two', 4) }
-
       it 'adds page ID' do
-        subject.save(word)
-        expect(subject.all.last.page_ids).to eq [2, 4]
+        subject.save('two', 4)
+        expect(subject.all['two']).to eq [2, 4]
       end
-    end
-  end
-
-  describe '.find' do
-    it 'finds word by text' do
-      expect(subject.find('one')).to eq words.first
     end
   end
 
